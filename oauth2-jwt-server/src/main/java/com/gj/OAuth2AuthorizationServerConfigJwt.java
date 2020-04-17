@@ -1,4 +1,4 @@
-package org.baeldung.config;
+package com.gj;
 
 import java.util.Arrays;
 

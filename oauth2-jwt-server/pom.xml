@@ -6,11 +6,7 @@
 	<name>oauth2-jwt-server</name>
 	<packaging>war</packaging>
 
-	<!-- <parent>
-		<groupId>org.baeldung</groupId>
-		<artifactId>spring-security-oauth</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent> -->
+
 	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -117,7 +113,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>spring-security-oauth-server</finalName>
+		<finalName>oauth2-jwt-server</finalName>
 		<pluginManagement>
 			<plugins>
 
