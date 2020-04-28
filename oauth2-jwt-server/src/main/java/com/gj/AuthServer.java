@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class AuthorizationServerApplication extends SpringBootServletInitializer {
+public class AuthServer extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthorizationServerApplication.class, args);
+        SpringApplication.run(AuthServer.class, args);
     }
 
 }

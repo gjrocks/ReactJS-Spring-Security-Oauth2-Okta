@@ -16,13 +16,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetails(final AuthenticationManagerBuilder auth) throws Exception {
-        // @formatter:off
+      
 	auth.inMemoryAuthentication()
-	  .withUser("john").password("123").roles("USER").and()
-	  .withUser("tom").password("111").roles("ADMIN").and()
-	  .withUser("user1").password("pass").roles("USER").and()
-	  .withUser("admin").password("nimda").roles("ADMIN");
-    }// @formatter:on
+	  .withUser("guest").password("guest").roles("USER").and()
+	  .withUser("ganesh").password("ganesh").roles("ADMIN");
+	
+    }
 
     @Override
     @Bean
@@ -32,14 +31,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        // @formatter:off
+
 		http.authorizeRequests().antMatchers("/login").permitAll()
 		.antMatchers("/oauth/token/revokeById/**").permitAll()
 		.antMatchers("/tokens/**").permitAll()
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll()
 		.and().csrf().disable();
-		// @formatter:on
+	
     }
 
 }

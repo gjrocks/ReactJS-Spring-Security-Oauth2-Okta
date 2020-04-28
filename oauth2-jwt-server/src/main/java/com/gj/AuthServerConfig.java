@@ -24,7 +24,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfigurerAdapter {
+public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -39,31 +39,16 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-            .withClient("sampleClientId")
-            .authorizedGrantTypes("implicit")
-            .scopes("read", "write", "foo", "bar")
-            .autoApprove(false)
-            .accessTokenValiditySeconds(3600)
-
-            .and()
-            .withClient("fooClientIdPassword")
-            .secret("secret")
+        
+            .withClient("myApp_123456")
+            .secret("myApp_123456")
             .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-            .scopes("foo", "read", "write")
+            .scopes("read", "write")
             .accessTokenValiditySeconds(3600)
             // 1 hour
-            .refreshTokenValiditySeconds(2592000)
-            // 30 days
+            .refreshTokenValiditySeconds(2592000); // 30 days
 
-            .and()
-            .withClient("barClientIdPassword")
-            .secret("secret")
-            .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-            .scopes("bar", "read", "write")
-            .accessTokenValiditySeconds(3600)
-            // 1 hour
-            .refreshTokenValiditySeconds(2592000) // 30 days
-        ;
+        
     }
 
     @Bean
@@ -89,18 +74,28 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
         return new JwtTokenStore(accessTokenConverter());
     }
 
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        // converter.setSigningKey("123");
-        final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
-        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
-        return converter;
-    }
+	@Bean
+	public JwtAccessTokenConverter accessTokenConverter() {
+		final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("oauth2.jks"),
+				"6789012".toCharArray());
+		
+		converter.setKeyPair(keyStoreKeyFactory.getKeyPair("oauth2", "123456".toCharArray()));
+		return converter;
+	}
 
+	
+	/*
+	 * @Bean public JwtAccessTokenConverter accessTokenConverter() { final
+	 * JwtAccessTokenConverter converter = new JwtAccessTokenConverter(); final
+	 * KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new
+	 * ClassPathResource("mytest.jks"), "mypass".toCharArray());
+	 * converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest")); return
+	 * converter; }
+	 */
     @Bean
     public TokenEnhancer tokenEnhancer() {
-        return new CustomTokenEnhancer();
+        return new JWTTokenEnhancer();
     }
 
 }

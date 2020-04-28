@@ -16,21 +16,16 @@
 	</parent>
 	
 <properties>
-		<!-- util -->
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-io.version>2.4</commons-io.version>
-
-		<!-- testing -->
 		<rest-assured.version>2.9.0</rest-assured.version>
-
-		<!-- Maven plugins -->
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<maven-war-plugin.version>3.2.0</maven-war-plugin.version>
 		<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
 		<cargo-maven2-plugin.version>1.6.5</cargo-maven2-plugin.version>
-		<start-class>org.baeldung.config.AuthorizationServerApplication</start-class>
+		<start-class>com.gj.AuthServer</start-class>
 
-	</properties>
+</properties>
 	<dependencies>
 
 		<dependency>
@@ -221,9 +216,4 @@
 			</build>
 		</profile>
 	</profiles>
-
-
-	<!-- <profiles> <profile> <id>dev</id> <build> <resources> <resource> <directory>src/main/resources</directory> 
-		<filtering>true</filtering> <excludes> <exclude>*.jks</exclude> </excludes> 
-		</resource> </resources> </build> </profile> </profiles> -->
 </project>

@@ -20,7 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.gj.AuthorizationServerApplication;
+import com.gj.AuthServer;
 
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@SpringBootTest(classes = AuthorizationServerApplication.class)
+@SpringBootTest(classes = AuthServer.class)
 @ActiveProfiles("mvc")
 public class OAuthMvcTest {
 
