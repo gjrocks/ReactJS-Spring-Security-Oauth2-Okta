@@ -8,21 +8,14 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SvgIcon from '@material-ui/core/SvgIcon';
-
+import UserDetails from './UserDetails';
+import ContactDetails from './ContactDetails';
+import IdDetails from './IdDetails';
+import SummaryDetails from './SummayDetails';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Registration from './Registration';
-import Home from './Home';
-import Admin from './Admin';
-import LoginSuccess from './LoginSuccess';
-import AuthService from '../services/auth/AuthService'
-import { withRouter } from 'react-router-dom'
 import './App.css';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {
   Root,
@@ -33,7 +26,6 @@ import {
   CollapseIcon,
   standardLayoutPreset,
 } from '@mui-treasury/layout';
-import Login from './Login';
 
 const useStyles = theme => ({
   root: {
@@ -62,18 +54,26 @@ const useStyles = theme => ({
   },
   menuItemSelected: {
     "&$menuItemSelected, &$menuItemSelected:focus, &$menuItemSelected:hover": {
-      backgroundColor: "#3f51b5",
+      backgroundColor: "#575555",
       color: "white"
     }
   },
 
   menuItemRoot: {
-
-    backgroundColor: "#ced3eb",
-    marginTop: 1
-
-
-
+   
+      backgroundColor: "#bdbdbd",
+      marginTop:1
+      
+     
+    
+  },
+  appbarstyle: {
+    primary: {
+      light: "#7986cb",
+      main: "rgba(85, 160, 5, 1)",
+      dark: "#303f9f",
+      contrastText: "#fff"
+    }
   },
   navBar: { 'top': AppBar.height }
 
@@ -93,13 +93,19 @@ class App extends Component {
     super(props);
     this.state = {
       step: 1,
+      firstName: "",
+      lastName: "",
+      email: "",
+      mobileNumber: "",
+      NationalId: "",
+      empId: "",
+      passport: "",
+      countryCode: "",
       selection: 1,
-      sideMenuSelected: "",
-      open:false
+      sideMenuSelected: ""
     }
     this.handleSelection = this.handleSelection.bind(this);
-    this.handleClickOpen=this.handleClickOpen.bind(this);
-  //  this.getText = this.getText.bind(this);
+    this.getText = this.getText.bind(this);
     this.links = [<Link href="#" onClick={(e) => {
       e.preventDefault();
       this.setState({ step: 1 });
@@ -126,33 +132,65 @@ class App extends Component {
     e.preventDefault();
     console.log('event', e.target.value);
   }
-  
+  getText() {
+
+    var t = [];
+    for (var i = 0; i < this.state.step - 1; i++) {
+      t.push(this.links[i]);
+      t.push(" | ");
+
+
+    }
+    return t;
+  }
   handleSelection(event, index, value) {
     this.setState({ selection: value });
   }
+  //next step
+  nextStep = () => {
+    const { step } = this.state;
+    this.setState({ step: step + 1 });
+  }
+
+
+  //prev step
+  prevStep = () => {
+    const { step } = this.state;
+    this.setState({ step: step - 1 });
+  }
+
   handleChange = (input) => (e) => {
 
     this.setState({ [input]: e.target.value });
   }
-  logout=()=>{
-    AuthService.logout();
-    console.log("i am logged out");
-    this.setState({open:false});
-    //this.setState({isLoggedIn:true});
+  continue = () => {
+    this.props.nextStep();
   }
-  handleClickOpen(){
-    this.setState({open:true});
-  }
-
   render() {
-
     const { classes } = this.props;
-    const { match, location, history } = this.props;
+
     const layout2 = { ...standardLayoutPreset };
 
-    console.log("is logged in :", AuthService.isUserLoggedIn);
 
- 
+    const { step } = this.state;
+    const { firstName,
+      lastName,
+      email,
+      mobileNumber,
+      nationalId,
+      empId,
+      passport,
+      countryCode } = this.state;
+    const values = {
+      firstName,
+      lastName,
+      email,
+      mobileNumber,
+      nationalId,
+      empId,
+      passport,
+      countryCode
+    };
 
 
     return (
@@ -166,14 +204,14 @@ class App extends Component {
                 <MenuIcon />
               </IconButton>
 
-              <Typography variant="h6" className={classes.title}>
-                My App
-          </Typography>
 
 
-              <div className="mybtn1">   <Button color="inherit" onClick={this.handleClickOpen}>Logout</Button></div>
 
+              <div className="mybtn">   <Button color="inherit" >Login</Button></div>
 
+              <Button color="inherit">Login2</Button>
+              <Button color="inherit">Login3</Button>
+              <Button color="inherit">Login5</Button>
 
 
             </Toolbar>
@@ -187,28 +225,15 @@ class App extends Component {
             <CollapseIcon />
           </CollapseBtn>
 
-          <MenuItem onClick={(e) => {
-            e.preventDefault();
-            history.push('/');
-            this.setState({ sideMenuSelected: "Home" });
-          }} selected={this.state.sideMenuSelected === "Home"} classes={{
-            root: classes.menuItemRoot,
-            selected: classes.menuItemSelected
-          }} >&nbsp;&nbsp;&nbsp;Home</MenuItem>
 
-          <MenuItem onClick={(e) => {
-            e.preventDefault();
-            history.push('/registration');
+          <MenuItem onClick={() => {
             this.setState({ sideMenuSelected: "PersonDetails" });
           }} selected={this.state.sideMenuSelected === "PersonDetails"} classes={{
             root: classes.menuItemRoot,
             selected: classes.menuItemSelected
-          }} >&nbsp;&nbsp;&nbsp;Registration</MenuItem>
+          }}>&nbsp;&nbsp;&nbsp;Registration</MenuItem>
 
-          <MenuItem onClick={(e) => {
-            e.preventDefault();
-            history.push('/login');
-
+          <MenuItem onClick={() => {
             this.setState({ sideMenuSelected: "Login" });
           }} selected={this.state.sideMenuSelected === "Login"} classes={
             {
@@ -216,60 +241,74 @@ class App extends Component {
               selected: classes.menuItemSelected
             }
           }>&nbsp;&nbsp;&nbsp;Login</MenuItem>
-
-          {<MenuItem onClick={(e) => {
-            e.preventDefault();
-            history.push('/admin');
-
+    <MenuItem onClick={() => {
             this.setState({ sideMenuSelected: "Admin" });
-
-
           }} selected={this.state.sideMenuSelected === "Admin"} classes={
             {
               root: classes.menuItemRoot,
               selected: classes.menuItemSelected
             }
-          }>&nbsp;&nbsp;&nbsp;Admin</MenuItem>}
+          }>&nbsp;&nbsp;&nbsp;Admin</MenuItem>
 
         </Sidebar>
         <Content>
+          <Grid container spacing={1}>
+            <Grid item xs={12} >
+              <div className="page-navigation-text">
+                {this.getText()}
 
+              </div>
+            </Grid>
+          </Grid>
+          {step === 1 &&
+            <UserDetails
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
 
+            />
+          }
+          {step === 2 &&
+            <ContactDetails
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
 
-          <Switch>
-            <Route path={"/registration"} exact component={Registration} />
-            <Route path={"/"} exact component={Home} />
-            <Route path={"/admin"} exact component={Admin} />
-          
-            <Route path={"/login"} exact component={Login}  />
-            <Route path={"/loginsuccess"} exact component={LoginSuccess} />
+            />
+          }
+          {/*this.stage.step == 2 &&
+            <ContactDetails
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
 
+            />*/
+          }
+          {
+            step === 3 &&
+            <IdDetails
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
 
-          </Switch>
-          
-          <Dialog
-        open={this.state.open}
-        onClose={this.handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Do you want to logout?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-           If you logout, you will loose your data. Please save all the activities. Do you want to logout?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.logout} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={this.logout} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
+            />
+          }
+          {
+            step === 4 &&
+            <SummaryDetails
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
+
+            />
+          }
         </Content>
-        
+
 
       </Root>
 
@@ -277,8 +316,5 @@ class App extends Component {
     );
   }
 }
-App = withStyles(useStyles)(App);
-App = withRouter(App);
-export default App;
 
-
+export default withStyles(useStyles)(App);

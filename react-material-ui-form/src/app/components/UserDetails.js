@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import styles from '../myStyle.module.css';
+import styles from '../css/myStyle.module.css';
 import Grid from '@material-ui/core/Grid';
 
 
@@ -28,7 +28,10 @@ const useStyles = theme => ({
     display: 'inline-block',
   },
   textFieldStyle: {
+
     textAlign: 'center'
+
+
   },
   appbarstyle: {
     primary: {
@@ -43,7 +46,7 @@ const useStyles = theme => ({
 });
 
 
-class IdDetails extends Component {
+class UserDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,9 +55,6 @@ class IdDetails extends Component {
   }
   continue = () => {
     this.props.nextStep();
-  }
-  previous = () => {
-    this.props.prevStep();
   }
   render() {
     const { classes } = this.props;
@@ -69,28 +69,31 @@ class IdDetails extends Component {
         <Grid container spacing={3}>
           <Grid item xs={12} >
             <Paper elevation={3} className={classes.paperStyle} label="Personal ">
+
               <div className={styles.content}>
-                <div className={styles.headLabel}><label className={styles.textFieldStyle2}>Id Details</label></div>
+                <div className={styles.headLabel}>
+                  <label className={styles.textFieldStyle2}>Personal Details</label>
+                </div>
 
 
-                <div className={styles.ele}><label className={styles.label}>Passport</label>
-                  <TextField id="passport" variant="outlined" label="Passport"
-                    size="medium" defaultValue={values.passport} onChange={handleChange('passport')} /></div>
-
-                <div className={styles.ele}> <label className={styles.label}>Country</label>
-                  <TextField id="countryCode" variant="outlined" label="Country" size="medium" defaultValue={values.countryCode}
-                    onChange={handleChange('countryCode')} /></div>
-                <br>
-                </br>
-                <br>
-                </br>
-
-                <div className={styles.ele}><Button variant="contained" title="Continue" color="primary" onClick={this.continue}>Continue</Button>
-                  <Button variant="contained" title="Continue" color="primary" onClick={this.previous}>Previous</Button></div>
+                <div className={styles.ele}><label className={styles.label}>First Name:</label>
+                  <TextField id="firstName" variant="outlined" label="First Name"
+                    size="medium" defaultValue={values.firstName} onChange={handleChange('firstName')} /></div>
+                <div className={styles.ele}>
+                  <label className={styles.label}>Last Name:</label>
+                  <TextField id="lasttName" variant="outlined" label="Last Name" size="medium" defaultValue={values.lastName} onChange={handleChange('lastName')} /></div>
+                <div className={styles.ele}>
+                  <label className={styles.label}>Email:</label>
+                  <TextField id="email" variant="outlined" label="Email" size="medium" defaultValue={values.email} onChange={handleChange('email')} /></div>
 
               </div>
+              <div className={styles.btn}>
+                <Button variant="contained" title="Continue" color="primary" onClick={this.continue}>Continue</Button></div>
+
+
 
             </Paper>
+
 
           </Grid>
         </Grid>
@@ -104,4 +107,4 @@ class IdDetails extends Component {
   }
 }
 
-export default withStyles(useStyles)(IdDetails);
+export default withStyles(useStyles)(UserDetails);
