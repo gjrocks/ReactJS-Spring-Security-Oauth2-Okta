@@ -17,12 +17,13 @@ import Admin from './Admin';
 import LoginSuccess from './LoginSuccess';
 import AuthService from '../services/auth/AuthService'
 import { withRouter } from 'react-router-dom'
-import './App.css';
+import '../css/App.css';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {Config} from '../config/config';
 
 import {
   Root,
@@ -69,7 +70,7 @@ const useStyles = theme => ({
 
   menuItemRoot: {
 
-    backgroundColor: "#ced3eb",
+    backgroundColor: "#eff1f3",
     marginTop: 1
 
 
@@ -151,7 +152,7 @@ class App extends Component {
     const layout2 = { ...standardLayoutPreset };
 
     console.log("is logged in :", AuthService.isUserLoggedIn);
-
+    console.log("Config :", Config.authServer);
  
 
 

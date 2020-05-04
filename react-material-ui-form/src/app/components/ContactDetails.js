@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import styles from '../myStyle.module.css';
+import styles from '../css/myStyle.module.css';
 import Grid from '@material-ui/core/Grid';
 
 

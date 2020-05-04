@@ -1,9 +1,10 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-import customtheme from './theme1.json';
+
 import { createMuiTheme } from '@material-ui/core/styles';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
