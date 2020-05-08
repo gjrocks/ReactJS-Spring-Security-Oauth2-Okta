@@ -11,6 +11,8 @@
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "btoa": "^1.2.1",
     "express": "^4.17.1",
     "node-sass": "^4.14.0",
     "properties-reader": "^2.0.0",
@@ -24,10 +26,6 @@
     "yargs": "^15.3.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "wstart": "npm run wbuild",
     "wbuild": "cross-env NODE_ENV=developement webpack -d && copy src\\index.html dist\\index.html /Y && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback",
     "build:prod": "cross-env NODE_ENV=production webpack -p && copy src\\index.html dist\\index.html /Y && Xcopy /E /I src\\app\\properties dist\\properties\\ /Y"

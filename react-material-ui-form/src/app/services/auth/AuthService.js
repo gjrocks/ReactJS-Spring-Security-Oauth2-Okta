@@ -1,7 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import {Config} from '../../config/config';
-
+import * as Constants from '../../config/config';
 let authUser = null;
 let accessToken=null;
 class AuthService {
@@ -40,6 +39,7 @@ class AuthService {
         var encodedString = btoa("myApp_123456:myApp_123456");
         
     
+
         console.log('userName', userName);
         console.log('password', password);
 
@@ -60,7 +60,9 @@ class AuthService {
             console.log("error" ,error);
             AuthService.isLoggedIn=false;
         })*/
-        authUser = await axios.post('http://localhost:9999/oauth2-jwt-server-service/oauth/token', qs.stringify(loginData), axiosConfig)
+        authUser = await axios.post('http://localhost:9999/oauth2-jwt-server-service/oauth/token', qs.stringify(loginData), axiosConfig);
+        const myToken=await axios.post('/api/getToken',loginData);
+        console.log('mytoken', myToken);
         /*authUser.then((res)=>{
             console.log('res', res);
             accessToken=true;        

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthService from '../../services/auth/AuthService';
+import AuthService from '../services/auth/AuthService';
 
 const Admin =(props)=>{
     if(AuthService.isUserLoggedIn){
