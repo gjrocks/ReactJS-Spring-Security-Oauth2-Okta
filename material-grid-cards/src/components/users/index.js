@@ -71,7 +71,7 @@ function User( props) {
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Bob
-      </Typography>
+      </Typography>  
                 <Typography variant="body2" component="p" color="textSecondary">
                   Bob was king of the UK in his carrer..
       </Typography>

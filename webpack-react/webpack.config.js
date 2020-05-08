@@ -8,7 +8,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 console.log(process.env.NODE_ENV);
 var NODE_ENV=process.env.NODE_ENV;
 var config = {
-    entry: SRC_DIR + "\\app\\index.js",
+   // entry: SRC_DIR + "\\app\\index.js",  
+    entry: ["babel-polyfill",  SRC_DIR + "\\app\\index.js"],
     output: {
         path: DIST_DIR + "\\app",
         filename: "bundle.js",
