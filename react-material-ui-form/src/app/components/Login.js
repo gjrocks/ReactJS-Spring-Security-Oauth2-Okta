@@ -121,7 +121,7 @@ class Login extends Component {
     this.preventDefault = this.preventDefault.bind(this);
     this.gologin = this.goLogin.bind(this);
     this.login = this.login.bind(this);
-
+     this.securelogin=this.securelogin.bind(this);  
   }
   handleErrorClose(event, reason) {
     if (reason === 'clickaway') {
@@ -167,7 +167,7 @@ class Login extends Component {
   }
   goLogin() {
     this.setState({ open: true });
-    this.login();
+    this.securelogin();
 
   }
   login() {
@@ -201,7 +201,35 @@ class Login extends Component {
       */
   }
 
-
+  securelogin() {
+   
+     const res = AuthService.secureAuthenticate(this.state.userName, this.state.password);
+     console.log("SECURE LOGIN ",res);
+   
+    res.then((val) => {
+       console.log(val);
+       this.setState({ loginerror: false, open: false,loginsuccess:true });
+      AuthService.login(val.data.retData);
+    
+     })
+       .catch((v) => {
+         console.log('error', v);
+     
+        AuthService.logout();
+         this.setState({ loginerror: true, open: false });
+       }); 
+ 
+ 
+     /*console.log("username ",this.state.userName + "and  :" +this.state.loginerror);
+        if(AuthService.isUserLoggedIn()===false){
+          console.log("came here");
+          this.setState({loginerror:true});
+        }else{
+          this.setState({loginerror:false});
+        }
+        this.setState({open : false});
+       */
+   }
   handleClose = () => {
     this.setState({ open: false });
 
@@ -228,7 +256,7 @@ class Login extends Component {
       <div>
         <Snackbar open={this.state.loginerror} autoHideDuration={6000} onClose={this.handleErrorClose}>
           <Alert onClose={this.handleErrorClose} severity="error">
-            Please check that the outh2 authorisation server is up and use the username "tom" and password :"111"
+            Please check that the outh2 authorisation server is up and use the username "ganesh" and password :"ganesh"
         </Alert>
         </Snackbar>
         <Grid container spacing={3}>
